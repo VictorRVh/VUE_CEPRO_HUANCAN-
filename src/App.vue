@@ -4,21 +4,21 @@ import HEADER from './components/Header/Nav.vue'
 </script>
 
 <template>
-
   <div class="content-main">
     <HEADER />
     <RouterView />
   </div>
-
 </template>
 
-<style scoped>
-
-.content-main {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  background-color: aqua;
+<style>
+body {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
 }
 
+.content-main {
+  padding: 20px;
+}
 </style>

@@ -10,6 +10,7 @@
             <RouterLink to="/matricula">Registrar Matrícula</RouterLink>
             <RouterLink to="/registroEstudiante">Registrar Estudiante</RouterLink>
             <RouterLink to="/registroDocente">Registrar Docente</RouterLink>
+            <RouterLink to="/Home">Home</RouterLink>
         </nav>
 
     </header>

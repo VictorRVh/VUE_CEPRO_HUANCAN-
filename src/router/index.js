@@ -11,7 +11,7 @@ const router = createRouter({
     },
     {
       path: '/nomina',
-      name: 'nopmina',
+      name: 'nomina',
       component: () => import('../components/Especialidad/Nomina.vue')
     },
     {
@@ -28,7 +28,18 @@ const router = createRouter({
       path: '/registroDocente',
       name: 'registerTeacher',
       component: () => import('../components/Registro/Docente.vue')
+    },
+    {
+      path: '/verEspecialidad',
+      name: 'viewEspecialidad',
+      component: () => import('../components/Especialidad/verEspecialidad.vue')
+    },
+    {
+      path: '/Home',
+      name: 'interfaz',
+      component: () => import('../components/Inicio/interfaz.vue')
     }
+    
   ]
 })
 
