@@ -6,7 +6,8 @@
         <ul>
           <li @click="verEspecialidades">Especialidades</li>
           <li @click="verDocentes">Docentes</li>
-          <li @click="imprimirPDF">Imprimir PDF</li>
+          <li @click="matricula">Matricula</li>
+          <li @click="estudiante">Registrar Estudiante</li>
         </ul>
       </nav>
     </header>
@@ -14,15 +15,15 @@
       <div class="image-container">
         <img src="/img/imagen1.jpg" alt="Descripción 1" class="carousel-image">
         <div class="carousel-content">
-          <h2>Descripción 1</h2>
-          <p>Esta es una descripción sobre la gestión académica y sus beneficios.</p>
+          <h2>GESTION ACADEMICA CEPRO HUANCANÉ</h2>
+          <p>Mejora la imagen de la institución educativa y su reconocimiento por parte de la sociedad; Aporta un mejor rendimiento financiero; Ofrece un mejor proceso de enseñanza-aprendizaje, con clases de mayor calidad; Fideliza a los alumnos, reduce el abandono y atrae a nuevos interesados, entre otros beneficios.</p>
         </div>
       </div>
       <div class="image-container">
         <img src="/img/imagen2.jpg" alt="Descripción 2" class="carousel-image">
         <div class="carousel-content">
-          <h2>Descripción 2</h2>
-          <p>Otra descripción relevante sobre la gestión académica.</p>
+          <h2>IMPORTANCIA</h2>
+          <p> Es necesario crear notoriedad, una buena imagen y posicionamiento. Todo ello le permitirá ganar relevancia y diferenciación basándose en una propuesta de valor única. .</p>
         </div>
       </div>
       <!-- Agrega más imágenes según sea necesario -->
@@ -38,8 +39,15 @@ export default {
       this.$router.push({ path: '/verEspecialidad' }); // Navegación programática
     },
     verDocentes() {
-      this.$router.push({ path: '/verDocentes' }); // Navegación programática
+      this.$router.push({ path: '/verDocente' }); // Navegación programática
     },
+    matricula() {
+      this.$router.push({ path: '/Matricula' }); // Navegación programática
+    },
+    estudiante() {
+      this.$router.push({ path: '/registroEstudiante' }); // Navegación programática
+    },
+    
     imprimirPDF() {
       alert('Imprimir PDF');
       // Aquí agregarás la lógica para imprimir en PDF

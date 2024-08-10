@@ -1,154 +1,195 @@
 <template>
-    <div class="container">
+  <div class="container">
+    <div class="header">
       <h1>ESPECIALIDADES</h1>
-      <div v-if="especialidades.length">
-        <div v-for="(especialidad, index) in especialidades" :key="index" class="especialidad-card">
-          <div class="card-content">
-            <h2>{{ especialidad.nombre }}</h2>
-            <div class="detalle-container">
-              <div class="detalle"><strong>Ciclo Formativo:</strong></div>
-              <div class="detalle-valor">{{ especialidad.cicloFormativo }}</div>
-              <div class="detalle"><strong>Docente:</strong></div>
-              <div class="detalle-valor">{{ especialidad.docente }}</div>
-              <div class="detalle"><strong>Total de Horas:</strong></div>
-              <div class="detalle-valor">{{ especialidad.totalHoras }}</div>
-              <div class="detalle"><strong>Total de Créditos:</strong></div>
-              <div class="detalle-valor">{{ especialidad.totalCreditos }}</div>
-            </div>
-          </div>
-          <div class="acciones">
-            <button @click="editarEspecialidad(index)">Editar</button>
-            <button @click="eliminarEspecialidad(index)">Eliminar</button>
-            <button @click="agregarEspecialidad">Agregar</button>
+      <button class="agregar-btn" @click="agregarEspecialidad">Agregar Especialidad</button>
+    </div>
+    <div v-if="especialidades.length">
+      <div v-for="(especialidad, index) in especialidades" :key="index" class="especialidad-card">
+        <div class="card-content">
+          <h2>{{ especialidad.nombre }}</h2>
+          <div class="detalle-container">
+            <div class="detalle"><strong>Docente:</strong> <span class="detalle-valor">{{ especialidad.docente }}</span></div>
+            <div class="detalle"><strong>Ciclo Formativo:</strong> <span class="detalle-valor">{{ especialidad.cicloFormativo }}</span></div>
+            <div class="detalle"><strong>Total de Horas:</strong> <span class="detalle-valor">{{ especialidad.totalHoras }}</span></div>
+            <div class="detalle"><strong>Total de Créditos:</strong> <span class="detalle-valor">{{ especialidad.totalCreditos }}</span></div>
           </div>
         </div>
-      </div>
-      <div v-else>
-        <p>No hay especialidades registradas.</p>
+        <div class="acciones">
+          <button class="accion-btn imprimir" @click="imprimirNomina(index, 'normal')">Imprimir Nómina Normal</button>
+          <button class="accion-btn imprimir" @click="imprimirNomina(index, 'ugel')">Imprimir Nómina UGEL</button>
+          <button class="accion-btn editar" @click="editarEspecialidad(index)">Editar</button>
+          <button class="accion-btn eliminar" @click="eliminarEspecialidad(index)">Eliminar</button>
+        </div>
       </div>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        especialidades: [
-          {
-            nombre: 'Peluquería',
-            cicloFormativo: 'Auxiliar Técnico',
-            docente: 'Juan Pérez',
-            totalHoras: 180,
-            totalCreditos: 15
-          },
-          // Más especialidades pueden agregarse aquí
-        ]
-      };
-    },
-    methods: {
-      editarEspecialidad(index) {
-        alert(`Editando especialidad: ${this.especialidades[index].nombre}`);
-      },
-      eliminarEspecialidad(index) {
-        if (confirm(`¿Seguro que deseas eliminar la especialidad ${this.especialidades[index].nombre}?`)) {
-          this.especialidades.splice(index, 1);
+    <div v-else>
+      <p>No hay especialidades registradas.</p>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      especialidades: [
+        {
+          nombre: 'Peluquería',
+          cicloFormativo: 'Auxiliar Técnico',
+          docente: 'Juan Pérez',
+          totalHoras: 180,
+          totalCreditos: 15
+        },
+        {
+          nombre: 'Estética',
+          cicloFormativo: 'Auxiliar Superior',
+          docente: 'María Gómez',
+          totalHoras: 200,
+          totalCreditos: 18
         }
-      },
-      agregarEspecialidad() {
-        alert('Agregar una nueva especialidad');
+      ]
+    };
+  },
+  methods: {
+    editarEspecialidad(index) {
+      alert(`Editando especialidad: ${this.especialidades[index].nombre}`);
+    },
+    eliminarEspecialidad(index) {
+      if (confirm(`¿Seguro que deseas eliminar la especialidad ${this.especialidades[index].nombre}?`)) {
+        this.especialidades.splice(index, 1);
       }
+    },
+    agregarEspecialidad() {
+      this.$router.push({ name: 'nomina' });
+    },
+    imprimirNomina(index, formato) {
+      alert(`Imprimiendo nómina de la especialidad ${this.especialidades[index].nombre} en formato ${formato}`);
+      // Aquí podrías implementar la lógica para generar e imprimir el archivo PDF en el formato deseado
     }
-  };
-  </script>
-  
-  <style scoped>
-  /* Estilos generales */
-  .container {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 4px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
-  
-  h1 {
-    color: #921733;
-    margin-bottom: 20px;
-    font-size: 1.8rem;
-    font-weight: bold;
-    text-align: left;
-  }
-  
-  /* Estilos para la tarjeta de cada especialidad */
-  .especialidad-card {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 15px;
-    margin-bottom: 15px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  
-  .especialidad-card:hover {
-    transform: scale(1.01);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-  }
-  
-  .card-content {
-    text-align: left;
-    margin-bottom: 10px;
-  }
-  
-  .especialidad-card h2 {
-    color: #921733;
-    margin-bottom: 10px;
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-transform: uppercase;
-  }
-  
-  .detalle-container {
-    display: grid;
-    grid-template-columns: 150px 1fr;
-    gap: 8px;
-    padding-left: 10px;  /* Añade un pequeño margen interior a la izquierda */
-  }
-  
-  .detalle {
-    color: rgba(16, 16, 16, 0.8);
-    font-size: 1.1rem;
-  }
-  
-  .detalle-valor {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #6a6a6a;
-  }
-  
-  .acciones {
-    display: flex;
-    justify-content: space-between;  /* Distribuye los botones a lo largo del contenedor */
-    width: 100%;
-  }
-  
-  button {
-    background-color: #921733;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    font-weight: bold;
-    transition: background-color 0.2s ease;
-    flex-grow: 1;
-    margin: 0 5px;  /* Espacio entre los botones */
-  }
-  
-  button:hover {
-    background-color: #a02c40;
-  }
-  </style>
-  
+};
+</script>
+
+<style scoped>
+/* Estilos generales */
+/* Estilos generales */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+h1 {
+  color: #921733;
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-align: left;
+}
+
+.agregar-btn {
+  background-color: #921733;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.agregar-btn:hover {
+  background-color: #a02c40;
+}
+
+/* Estilos para la tarjeta de cada especialidad */
+.especialidad-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 20px;
+  margin-bottom: 25px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.card-content {
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.especialidad-card h2 {
+  color: #921733;
+  margin-bottom: 20px;
+  font-size: 1.7rem;
+  font-weight: bold;
+}
+
+.detalle-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.detalle {
+  color: rgba(16, 16, 16, 0.8);
+  font-size: 1.2rem;
+}
+
+.detalle-valor {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #6a6a6a;
+}
+
+/* Botones de acción que aparecen al hacer hover */
+.acciones {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(146, 23, 51, 0.8);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.especialidad-card:hover .acciones {
+  opacity: 1;
+}
+
+.accion-btn {
+  background-color: #921733;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  width: 100%;
+  text-align: center;
+  transition: background-color 0.2s ease;
+  margin-bottom: 8px; /* Ajusta la separación entre botones */
+  box-sizing: border-box; /* Asegura que el padding no afecte el tamaño total del botón */
+}
+
+.accion-btn:hover {
+  background-color: #a02c40;
+}
+
+</style>

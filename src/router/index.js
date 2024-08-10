@@ -21,7 +21,7 @@ const router = createRouter({
     },
     {
       path: '/registroEstudiante',
-      name: 'registerStudent',
+      name: 'registroEstudiante',
       component: () => import('../components/Registro/Estudiante.vue')
     },
     {
@@ -33,6 +33,16 @@ const router = createRouter({
       path: '/verEspecialidad',
       name: 'viewEspecialidad',
       component: () => import('../components/Especialidad/verEspecialidad.vue')
+    },
+    {
+      path: '/agregarEspecialidad',
+      name: 'agregarEspecialidad',
+      component: () => import('../components/Especialidad/verEspecialidad.vue')
+    },
+    {
+      path: '/verDocente',
+      name: 'viewDocente',
+      component: () => import('../components/Inicio/verDocente.vue')
     },
     {
       path: '/Home',
