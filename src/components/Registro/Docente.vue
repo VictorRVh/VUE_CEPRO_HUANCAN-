@@ -82,7 +82,7 @@ export default {
     async submitDocente() {
       try {
         console.log(this.docente); // Verifica los datos antes de la solicitud
-        const response = await fetch('http://localhost:5000/api/docentes                                                                                                                                              ', {
+        const response = await fetch('http://127.0.0.1:8000/api/teacher                                                                                                                                              ', {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json'

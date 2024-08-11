@@ -2,17 +2,26 @@
   <div class="container">
     <div class="header">
       <h1>ESPECIALIDADES</h1>
+      <input 
+        type="text" 
+        v-model="searchTerm" 
+        placeholder="Buscar por Programa de Estudio" 
+        class="search-input"
+      />
       <button class="agregar-btn" @click="agregarEspecialidad">Agregar Especialidad</button>
     </div>
-    <div v-if="especialidades.length">
-      <div v-for="(especialidad, index) in especialidades" :key="index" class="especialidad-card">
+    <div v-if="filteredEspecialidades.length">
+      <div v-for="(especialidad, index) in filteredEspecialidades" :key="index" class="especialidad-card">
         <div class="card-content">
-          <h2>{{ especialidad.nombre }}</h2>
+          <h2>{{ especialidad.programa_estudio }}</h2>
           <div class="detalle-container">
-            <div class="detalle"><strong>Docente:</strong> <span class="detalle-valor">{{ especialidad.docente }}</span></div>
-            <div class="detalle"><strong>Ciclo Formativo:</strong> <span class="detalle-valor">{{ especialidad.cicloFormativo }}</span></div>
-            <div class="detalle"><strong>Total de Horas:</strong> <span class="detalle-valor">{{ especialidad.totalHoras }}</span></div>
-            <div class="detalle"><strong>Total de Créditos:</strong> <span class="detalle-valor">{{ especialidad.totalCreditos }}</span></div>
+            <div class="detalle"><strong>Docente:</strong> <span class="detalle-valor">{{ especialidad.docente_id }}</span></div>
+            <div class="detalle"><strong>Ciclo Formativo:</strong> <span class="detalle-valor">{{ especialidad.ciclo_formativo }}</span></div>
+            <div class="detalle"><strong>Total de Horas:</strong> <span class="detalle-valor">{{ especialidad.hora_semanal }}</span></div>
+            <div class="detalle"><strong>Modalidad:</strong> <span class="detalle-valor">{{ especialidad.modalidad }}</span></div>
+            <div class="detalle"><strong>Descripción:</strong> <span class="detalle-valor">{{ especialidad.descripcion_especialidad }}</span></div>
+            <div class="detalle"><strong>Periodo Académico:</strong> <span class="detalle-valor">{{ especialidad.periodo_academico }}</span></div>
+            <div class="detalle"><strong>Sección:</strong> <span class="detalle-valor">{{ especialidad.seccion }}</span></div>
           </div>
         </div>
         <div class="acciones">
@@ -33,46 +42,52 @@
 export default {
   data() {
     return {
-      especialidades: [
-        {
-          nombre: 'Peluquería',
-          cicloFormativo: 'Auxiliar Técnico',
-          docente: 'Juan Pérez',
-          totalHoras: 180,
-          totalCreditos: 15
-        },
-        {
-          nombre: 'Estética',
-          cicloFormativo: 'Auxiliar Superior',
-          docente: 'María Gómez',
-          totalHoras: 200,
-          totalCreditos: 18
-        }
-      ]
+      especialidades: [],
+      searchTerm: '' // Valor para el término de búsqueda
     };
   },
+  computed: {
+    filteredEspecialidades() {
+      return this.especialidades.filter(especialidad =>
+        especialidad.programa_estudio.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    }
+  },
   methods: {
+    fetchEspecialidades() {
+      const url = `http://127.0.0.1:8000/api/especialidad`;
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          this.especialidades = data.especialidades;
+        })
+        .catch(error => {
+          console.error('Error fetching especialidades:', error);
+        });
+    },
     editarEspecialidad(index) {
-      alert(`Editando especialidad: ${this.especialidades[index].nombre}`);
+      alert(`Editando especialidad: ${this.filteredEspecialidades[index].programa_estudio}`);
     },
     eliminarEspecialidad(index) {
-      if (confirm(`¿Seguro que deseas eliminar la especialidad ${this.especialidades[index].nombre}?`)) {
-        this.especialidades.splice(index, 1);
+      if (confirm(`¿Seguro que deseas eliminar la especialidad ${this.filteredEspecialidades[index].programa_estudio}?`)) {
+        this.filteredEspecialidades.splice(index, 1);
       }
     },
     agregarEspecialidad() {
       this.$router.push({ name: 'nomina' });
     },
     imprimirNomina(index, formato) {
-      alert(`Imprimiendo nómina de la especialidad ${this.especialidades[index].nombre} en formato ${formato}`);
+      alert(`Imprimiendo nómina de la especialidad ${this.filteredEspecialidades[index].programa_estudio} en formato ${formato}`);
       // Aquí podrías implementar la lógica para generar e imprimir el archivo PDF en el formato deseado
     }
+  },
+  mounted() {
+    this.fetchEspecialidades(); // Cargar especialidades cuando el componente se monta
   }
 };
 </script>
 
 <style scoped>
-/* Estilos generales */
 /* Estilos generales */
 .container {
   max-width: 1000px;
@@ -111,6 +126,23 @@ h1 {
 
 .agregar-btn:hover {
   background-color: #a02c40;
+}
+
+/* Estilo del input de búsqueda */
+.search-input {
+  padding: 8px 12px;
+  font-size: 1rem;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  flex-grow: 1; /* Hace que el input tome todo el espacio disponible */
+  margin-right: 10px; /* Espacio entre el input y el botón */
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra interna */
+  transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+  border-color: #921733;
+  outline: none; /* Elimina el borde por defecto al enfocar */
 }
 
 /* Estilos para la tarjeta de cada especialidad */
@@ -191,5 +223,4 @@ h1 {
 .accion-btn:hover {
   background-color: #a02c40;
 }
-
 </style>

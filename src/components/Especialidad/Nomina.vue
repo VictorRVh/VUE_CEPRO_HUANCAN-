@@ -6,53 +6,6 @@
       <h2>TOTAL DE CRÉDITOS  {{    formData.total_creditos }}</h2>
       <h2>TOTAL DE HORAS     {{    formData.total_horas }}</h2>
     </div>
-
-
-    <h1>AGREGAR UNIDADES DIDÁCTICAS</h1>
-    <div v-for="(unidad, index) in unidades" :key="index" class="unidad">
-      <table class="data-table">
-        <tr>
-          <th>Nombre de la Unidad Didáctica:</th>
-          <td><input v-model="unidad.nombre_unidad" type="text" placeholder="Ingrese el nombre de la unidad didáctica" @input="toUpperCase('nombre_unidad', index)" /></td>
-        </tr>
-        <tr>
-          <th>Fecha de Inicio:</th>
-          <td><input v-model="unidad.fechaInicio" type="date" /></td>
-          <th>Fecha de Término:</th>
-          <td><input v-model="unidad.fechaTermino" type="date" /></td>
-        </tr>
-        <tr>
-          <th>Créditos:</th>
-          <td><input v-model="unidad.creditos" type="number" placeholder="Ingrese los créditos" @input="actualizarTotales" /></td>
-          <th>Horas:</th>
-          <td><input v-model="unidad.horas" type="number" placeholder="Ingrese las horas" @input="actualizarTotales" /></td>
-        </tr>
-        <tr>
-          <th>Capacidad de la Unidad Didáctica:</th>
-          <td colspan="3"><textarea v-model="unidad.descripcion" placeholder="Descripción de la capacidad"></textarea></td>
-        </tr>
-        <tr>
-          <th>Indicadores de Logro (I.L):</th>
-          <td colspan="3">
-            <div class="indicadores">
-              <div v-for="(il, ilIndex) in unidad.indicadoresLogro" :key="ilIndex" class="indicador-item">
-                <span>I.L {{ ilIndex + 1 }}:</span>
-                <input v-model="il.indicador" type="text" placeholder="Ingrese el indicador de logro" @input="toUpperCase('indicador', index, ilIndex)" />
-                <button @click="eliminarIndicadorLogro(index, ilIndex)" v-if="unidad.indicadoresLogro.length > 1">
-                  Eliminar
-                </button>
-              </div>
-              <button @click="agregarIndicadorLogro(index)" v-if="unidad.indicadoresLogro.length < 7">
-                Agregar
-              </button>
-            </div>
-          </td>
-        </tr>
-      </table>
-      <button @click="eliminarUnidad(index)" v-if="unidades.length > 1">Eliminar Unidad</button>
-    </div>
-    <button @click="agregarUnidad" v-if="unidades.length < 7">Agregar Unidad</button>
-
     <h1>AGREGAR ESPECIALIDAD</h1>
     <table class="data-table">
       <tr>
@@ -100,12 +53,6 @@
         <td><input v-model="formData.fecha_termino" type="date" /></td>
       </tr>
       <tr>
-        <th>Total de Horas:</th>
-        <td><input v-model="formData.total_horas" type="number" readonly /></td>
-        <th>Total de Créditos:</th>
-        <td><input v-model="formData.total_creditos" type="number" readonly /></td>
-      </tr>
-      <tr>
         <th>Sección:</th>
         <td><input v-model="formData.seccion" type="text" @input="toUpperCase('seccion')" /></td>
         <th>Turno:</th>
@@ -120,7 +67,53 @@
     </table>
 
     <button @click="submitForm">Guardar</button>
+
+    <h1>AGREGAR UNIDADES DIDÁCTICAS</h1>
+    <div v-for="(unidad, index) in unidades" :key="index" class="unidad">
+      <table class="data-table">
+        <tr>
+          <th>Nombre de la Unidad Didáctica:</th>
+          <td><input v-model="unidad.nombre_unidad" type="text" placeholder="Ingrese el nombre de la unidad didáctica" @input="toUpperCase('nombre_unidad', index)" /></td>
+        </tr>
+        <tr>
+          <th>Fecha de Inicio:</th>
+          <td><input v-model="unidad.fechaInicio" type="date" /></td>
+          <th>Fecha de Término:</th>
+          <td><input v-model="unidad.fechaTermino" type="date" /></td>
+        </tr>
+        <tr>
+          <th>Créditos:</th>
+          <td><input v-model="unidad.creditos" type="number" placeholder="Ingrese los créditos" @input="actualizarTotales" /></td>
+          <th>Horas:</th>
+          <td><input v-model="unidad.horas" type="number" placeholder="Ingrese las horas" @input="actualizarTotales" /></td>
+        </tr>
+        <tr>
+          <th>Capacidad de la Unidad Didáctica:</th>
+          <td colspan="3"><textarea v-model="unidad.descripcion" placeholder="Descripción de la capacidad"></textarea></td>
+        </tr>
+        <tr>
+          <th>Indicadores de Logro (I.L):</th>
+          <td colspan="3">
+            <div class="indicadores">
+              <div v-for="(il, ilIndex) in unidad.indicadoresLogro" :key="ilIndex" class="indicador-item">
+                <span>I.L {{ ilIndex + 1 }}:</span>
+                <input v-model="il.indicador" type="text" placeholder="Ingrese el indicador de logro" @input="toUpperCase('indicador', index, ilIndex)" />
+                <button @click="eliminarIndicadorLogro(index, ilIndex)" v-if="unidad.indicadoresLogro.length > 1">
+                  Eliminar
+                </button>
+              </div>
+              <button @click="agregarIndicadorLogro(index)" v-if="unidad.indicadoresLogro.length < 7">
+                Agregar
+              </button>
+            </div>
+          </td>
+        </tr>
+      </table>
+      <button @click="eliminarUnidad(index)" v-if="unidades.length > 1">Eliminar Unidad</button>
+    </div>
+    <button @click="agregarUnidad" v-if="unidades.length < 7">Agregar Unidad</button>
   </div>
+
 </template>
 
 <script>
